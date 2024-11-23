@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="PhoneBook_v2.Components.InputWithButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
+             x:Name="InputInputWithButtonComponent">
+    <UserControl.Resources>
+        <ResourceDictionary Source="InputWithButtonStyles.xaml"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--<component:Input LabelContent="{Binding ElementName=InputInputWithButtonComponent, Path=LabelContent}"
+                         InputText="{Binding ElementName=InputInputWithButtonComponent, Path=InputText}"
+                         IsReadOnly="{Binding ElementName=InputInputWithButtonComponent, Path=IsReadOnly}" 
+                         Grid.Column="0"/>-->
+        <Label Content="{Binding ElementName=InputInputWithButtonComponent, Path=LabelContent}"
+               Style="{StaticResource StyleLabel}"
+               Grid.Column="0"/>
+        <TextBox Text="{Binding ElementName=InputInputWithButtonComponent, Path=InputText}" 
+                 IsReadOnly="{Binding ElementName=InputInputWithButtonComponent, Path=.IsReadOnly}"
+                 Style="{StaticResource StyleInput}"
+                 Grid.Column="1"/>
+        <Button Content="{Binding ElementName=InputInputWithButtonComponent, Path=ButtonContent}"
+                Command="{Binding ElementName=InputInputWithButtonComponent, Path=ButtonCommand}"
+                Style="{StaticResource StyleButton}"
+                Grid.Column="2" />
+    </Grid>
+</UserControl>

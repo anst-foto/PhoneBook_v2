@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="PhoneBook_v2.Components.Input"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
+             x:Name="InputComponent">
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="InputStyles.xaml"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="{Binding ElementName=InputComponent, Path=LabelContent}"
+               Style="{StaticResource StyleLabel}"
+               Grid.Column="0"/>
+        <TextBox Text="{Binding ElementName=InputComponent, Path=InputText}" 
+                 IsReadOnly="{Binding ElementName=InputComponent, Path=.IsReadOnly}"
+                 Style="{StaticResource StyleInput}"
+                 Grid.Column="1"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:core="clr-namespace:System;assembly=mscorlib">
+    <core:Double x:Key="FontSizeBase">16</core:Double>
+    
+    <core:Double x:Key="MarginThicknessBase">5</core:Double>
+    <core:Double x:Key="PaddingThicknessBase">3</core:Double>
+    <core:Double x:Key="PaddingThicknessButtonBase">7</core:Double>
+    
+    <Color x:Key="ColorWarning"
+           R="255"
+           G="128"
+           B="0"
+           A="255"/>
+    <Color x:Key="ColorWhite"
+           R="255"
+           G="255"
+           B="255"
+           A="255"/>
+    <Color x:Key="ColorPrimary"
+           R="0"
+           G="0"
+           B="255"
+           A="255"/>
+    <core:Double x:Key="OpacityBase">1</core:Double>
+    
+    <core:Double x:Key="CornerRadiusValueBase">7</core:Double>
+    
+    <Thickness x:Key="MarginBase" 
+               Left="{StaticResource MarginThicknessBase}" 
+               Top="{StaticResource MarginThicknessBase}" 
+               Right="{StaticResource MarginThicknessBase}" 
+               Bottom="{StaticResource MarginThicknessBase}"/>
+    <Thickness x:Key="PaddingBase"
+               Left="{StaticResource PaddingThicknessBase}" 
+               Top="{StaticResource PaddingThicknessBase}" 
+               Right="{StaticResource PaddingThicknessBase}" 
+               Bottom="{StaticResource PaddingThicknessBase}"/>
+    <Thickness x:Key="PaddingButtonBase"
+               Left="{StaticResource PaddingThicknessButtonBase}" 
+               Top="{StaticResource PaddingThicknessButtonBase}" 
+               Right="{StaticResource PaddingThicknessButtonBase}" 
+               Bottom="{StaticResource PaddingThicknessButtonBase}"/>
+    
+    <SolidColorBrush x:Key="BackgroundClear" 
+                     Color="{StaticResource ColorWarning}"
+                     Opacity="{StaticResource OpacityBase}"/>
+    <SolidColorBrush x:Key="ForegroundButtonBase" 
+                     Color="{StaticResource ColorWhite}"
+                     Opacity="{StaticResource OpacityBase}"/>
+    <SolidColorBrush x:Key="BackgroundButtonBase" 
+                     Color="{StaticResource ColorPrimary}"
+                     Opacity="{StaticResource OpacityBase}"/>
+    
+    <CornerRadius x:Key="CornerRadiusBase"
+                  TopLeft="{StaticResource CornerRadiusValueBase}"
+                  TopRight="{StaticResource CornerRadiusValueBase}"
+                  BottomRight="{StaticResource CornerRadiusValueBase}"
+                  BottomLeft="{StaticResource CornerRadiusValueBase}"/>
+</ResourceDictionary>

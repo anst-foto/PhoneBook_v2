@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wm="clr-namespace:PhoneBook_v2.GUI_MVVM.WindowModels"
+        xmlns:component="clr-namespace:PhoneBook_v2.Components;assembly=PhoneBook_v2.Components"
         
         Title="MainWindow" 
         
@@ -10,42 +11,59 @@
         <wm:MainWindowModel/>
     </Window.DataContext>
     
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        
-        <ListView ItemsSource="{Binding Users}"
-                  SelectedItem="{Binding SelectedUser}"
-                  Grid.Column="0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
-        <StackPanel Grid.Column="1">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="ID"/>
-                <TextBox Text="{Binding Id}" 
-                         IsReadOnly="True"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Фамилия"/>
-                <TextBox Text="{Binding LastName}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Имя"/>
-                <TextBox Text="{Binding FirstName}"/>
-            </StackPanel>
-            <ListBox ItemsSource="{Binding Phones}"/>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Очистить"
-                        Command="{Binding CommandClear}"/>
-            </StackPanel>
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindowStyles.xaml"/>
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Top">
+            <component:InputWithButton LabelContent="Поиск"
+                                       InputText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       ButtonContent="Найти"
+                                       ButtonCommand="{Binding CommandSearch}"/>
         </StackPanel>
-    </Grid>
+        
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding StatusBar}"/>
+        </StackPanel>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+        
+            <ListView ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser}"
+                      Grid.Column="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
+                        <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        
+            <StackPanel Grid.Column="1">
+                <component:Input LabelContent="ID"
+                                 InputText="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="True"/>
+                <component:Input LabelContent="Фамилия"
+                                 InputText="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="False"/>
+                <component:Input LabelContent="Имя"
+                                 InputText="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="False"/>
+            
+                <ListBox ItemsSource="{Binding Phones}"/>
+            
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Очистить"
+                            Command="{Binding CommandClear}"
+                            Style="{StaticResource StyleButtonClear}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+    
 </Window>

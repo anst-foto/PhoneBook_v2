@@ -52,7 +52,22 @@ public class MainWindowModel : BaseNotify
         set => SetField(ref _phones, value);
     }
     
+    private string? _statusBar;
+    public string? StatusBar
+    {
+        get => _statusBar;
+        set => SetField(ref _statusBar, value);
+    }
+    
+    private string? _searchText;
+    public string? SearchText
+    {
+        get => _searchText;
+        set => SetField(ref _searchText, value);
+    }
+    
     public LambdaCommand CommandClear { get; }
+    public LambdaCommand CommandSearch { get; }
 
     public MainWindowModel()
     {
@@ -73,5 +88,10 @@ public class MainWindowModel : BaseNotify
             Phones = [];
         },
             canExecute: _ => true);
+
+        CommandSearch = new LambdaCommand(_ =>
+        {
+            StatusBar = $"Searching...{SearchText}";
+        });
     }
 }
