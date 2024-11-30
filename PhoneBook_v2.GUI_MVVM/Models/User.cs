@@ -1,4 +1,6 @@
-﻿namespace PhoneBook_v2.GUI_MVVM.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace PhoneBook_v2.GUI_MVVM.Models;
 
 public class User
 {
@@ -6,6 +8,8 @@ public class User
     
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    
+    [JsonIgnore]
     public string FullName => $"{LastName} {FirstName}";
     
     public List<string> Phones { get; set; }

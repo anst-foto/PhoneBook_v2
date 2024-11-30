@@ -6,7 +6,14 @@
         
         Title="MainWindow" 
         
-        Height="450" Width="800">
+        Height="450" Width="800"
+        MinHeight="400" MinWidth="700"
+        MaxHeight="500" MaxWidth="900"
+        
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize" WindowState="Normal"
+        WindowStyle="SingleBorderWindow">
+    
     <Window.DataContext>
         <wm:MainWindowModel/>
     </Window.DataContext>
@@ -15,7 +22,41 @@
         <ResourceDictionary Source="MainWindowStyles.xaml"/>
     </Window.Resources>
     
+    <Window.InputBindings>
+        <KeyBinding Modifiers="{Binding CommandOpen.Gesture.Modifiers}"
+                    Key="{Binding CommandOpen.Gesture.Key}"
+                    Command="{Binding CommandOpen}"/>
+        <KeyBinding Modifiers="Control" Key="O"
+                    Command="{Binding CommandOpen}"/>
+        
+        <KeyBinding Modifiers="{Binding CommandSave.Gesture.Modifiers}"
+                    Key="{Binding CommandSave.Gesture.Key}"
+                    Command="{Binding CommandSave}"/>
+        <KeyBinding Modifiers="Control" Key="S"
+                    Command="{Binding CommandSave}"/>
+        
+        <KeyBinding Modifiers="{Binding CommandSaveAs.Gesture.Modifiers}"
+                    Key="{Binding CommandSaveAs.Gesture.Key}"
+                    Command="{Binding CommandSaveAs}"/>
+        <KeyBinding Gesture="Ctrl+Shift+S"
+                    Command="{Binding CommandSaveAs}"/>
+    </Window.InputBindings>
+    
     <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="{Binding CommandOpen.Name}" 
+                          Command="{Binding CommandOpen}" 
+                          InputGestureText="{Binding CommandOpen.GestureText}"/>
+                <MenuItem Header="{Binding CommandSave.Name}"
+                          Command="{Binding CommandSave}"
+                          InputGestureText="{Binding CommandSave.GestureText}"/>
+                <MenuItem Header="{Binding CommandSaveAs.Name}"
+                          Command="{Binding CommandSaveAs}" 
+                          InputGestureText="{Binding CommandSaveAs.GestureText}"/>
+            </MenuItem>
+        </Menu>
+        
         <StackPanel DockPanel.Dock="Top">
             <component:InputWithButton LabelContent="Поиск"
                                        InputText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

@@ -1,10 +1,25 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
+using System.Windows.Input;
+using Microsoft.Win32;
 using PhoneBook_v2.GUI_MVVM.Models;
 
 namespace PhoneBook_v2.GUI_MVVM.WindowModels;
 
 public class MainWindowModel : BaseNotify
 {
+    #region ObservableProperties
+
+    private string? _filePath;
+    public string? FilePath
+    {
+        get => _filePath;
+        set => SetField(ref _filePath, value);
+    }
+    
     public ObservableCollection<User> Users { get; set; } = [];
     
     private User? _selectedUser;
@@ -65,9 +80,19 @@ public class MainWindowModel : BaseNotify
         get => _searchText;
         set => SetField(ref _searchText, value);
     }
+
+    #endregion
+
+    #region Commands
     
     public LambdaCommand CommandClear { get; }
     public LambdaCommand CommandSearch { get; }
+    
+    public LambdaCommandWithGesture CommandOpen { get; }
+    public LambdaCommandWithGesture CommandSave { get; }
+    public LambdaCommandWithGesture CommandSaveAs { get; }
+    
+    #endregion
 
     public MainWindowModel()
     {
@@ -93,5 +118,83 @@ public class MainWindowModel : BaseNotify
         {
             StatusBar = $"Searching...{SearchText}";
         });
+
+        CommandOpen = new LambdaCommandWithGesture(
+            execute: _ =>
+            {
+                var openFileDialog = new OpenFileDialog()
+                {
+                    Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    FilePath = openFileDialog.FileName;
+                }
+
+                OpenFile();
+            },
+            canExecute: _ => true)
+        {
+            Name = "Открыть...",
+            Gesture = new KeyGesture(Key.F3)
+        };
+        
+        CommandSave = new LambdaCommandWithGesture(
+            execute: _ =>
+            {
+                SaveFile();
+            },
+            canExecute: _ => true)
+        {
+            Name = "Сохранить",
+            Gesture = new KeyGesture(Key.F2)
+        };
+        
+        CommandSaveAs = new LambdaCommandWithGesture(
+            execute: _ =>
+            {
+                var saveFileDialog = new SaveFileDialog()
+                {
+                    Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
+                };
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    FilePath = saveFileDialog.FileName;
+                }
+
+                SaveFile();
+            },
+            canExecute: _ => true)
+        {
+            Name = "Сохранить как...",
+            Gesture = new KeyGesture(Key.F2, ModifierKeys.Control)
+        };
+    }
+
+    private void OpenFile()
+    {
+        if (FilePath is null) return;
+        
+        using var file = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+        var users = JsonSerializer.Deserialize<IEnumerable<User>>(file);
+        
+        Users.Clear();
+
+        foreach (var user in users)
+        {
+            Users.Add(user);
+        }
+    }
+
+    private void SaveFile()
+    {
+        if (FilePath is null) return;
+
+        using var file = new FileStream(FilePath, FileMode.Create, FileAccess.Write);
+        var options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+        };
+        JsonSerializer.Serialize(file, Users, options);
     }
 }
