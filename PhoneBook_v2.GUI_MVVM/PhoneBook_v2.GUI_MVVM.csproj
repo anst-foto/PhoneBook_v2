@@ -20,4 +20,9 @@
       <ProjectReference Include="..\PhoneBook_v2.Components\PhoneBook_v2.Components.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Assets\" />
+        <Resource Include="Assets\**" />
+    </ItemGroup>
+
 </Project>

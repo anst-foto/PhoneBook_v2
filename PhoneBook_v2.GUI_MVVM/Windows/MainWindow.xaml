@@ -57,6 +57,23 @@
             </MenuItem>
         </Menu>
         
+        <ToolBar DockPanel.Dock="Top">
+            <Button Command="{Binding CommandOpen}">
+                <Image Source="pack://application:,,,/Assets/icon_open_file.png"
+                       Width="36"/>
+            </Button>
+            
+            <Button Command="{Binding CommandSave}">
+                <Image Source="pack://application:,,,/Assets/icon_save_file.png"
+                       Width="36"/>
+            </Button>
+            
+            <Button Command="{Binding CommandSaveAs}">
+                <Image Source="pack://application:,,,/Assets/icon_save_as_file.png"
+                       Width="36"/>
+            </Button>
+        </ToolBar>
+        
         <StackPanel DockPanel.Dock="Top">
             <component:InputWithButton LabelContent="Поиск"
                                        InputText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -64,9 +81,9 @@
                                        ButtonCommand="{Binding CommandSearch}"/>
         </StackPanel>
         
-        <StackPanel DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom">
             <TextBlock Text="{Binding StatusBar}"/>
-        </StackPanel>
+        </StatusBar>
         
         <Grid>
             <Grid.ColumnDefinitions>
@@ -97,6 +114,12 @@
                                  IsReadOnly="False"/>
             
                 <ListBox ItemsSource="{Binding Phones}"/>
+                
+                <StackPanel Orientation="Vertical">
+                    <Image Source="{Binding SelectedUser.PhotoUri}"
+                           Width="200"/>
+                    <Button Content="Выбрать"/>
+                </StackPanel>
             
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Очистить"

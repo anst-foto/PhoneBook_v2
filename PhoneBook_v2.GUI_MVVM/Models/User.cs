@@ -13,4 +13,6 @@ public class User
     public string FullName => $"{LastName} {FirstName}";
     
     public List<string> Phones { get; set; }
+    
+    public Uri PhotoUri { get; set; }
 }
